@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     background: transparent;
@@ -13,14 +14,13 @@ html, body {
     color: #1f2937;
 }
 
-.prompt-box {
+.prompt-container {
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    background: #f0f4fb;
-    border: 1px solid rgba(0, 51, 160, 0.18);
-    border-radius: 8px;
-    padding: 12px 16px 20px 16px;
+    margin: 0;
+    padding: 0 0 20px 0;
+    background: transparent;
     font-size: 10pt;
     line-height: 1.6;
 }
@@ -31,16 +31,20 @@ html, body {
 
 .copy-button {
     position: absolute;
-    right: 8px;
-    bottom: 6px;
+    right: 0;
+    bottom: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 32px;
     height: 32px;
+
     padding: 0;
     border: 0;
     border-radius: 5px;
+
     background: transparent;
     color: #4b5563;
     cursor: pointer;
@@ -69,7 +73,7 @@ html, body {
 
 <body>
 
-<div class="prompt-box" id="promptBox">
+<div class="prompt-container" id="promptContainer">
 
     <div class="prompt-text" id="promptText">Loading prompt...</div>
 
@@ -114,6 +118,7 @@ const params = new URLSearchParams(window.location.search);
 const promptID = params.get("id");
 const course = params.get("course") || "Unknown course";
 
+const promptContainer = document.getElementById("promptContainer");
 const promptText = document.getElementById("promptText");
 const copyButton = document.getElementById("copyButton");
 
@@ -185,7 +190,7 @@ function showErrorIcon(message) {
 
 
 /* ==========================================================
-   DISPLAY ERROR
+   ERROR HANDLING
 ========================================================== */
 
 function displayError(message) {
@@ -205,7 +210,7 @@ function displayError(message) {
 
 
 /* ==========================================================
-   LOAD PROMPT
+   INITIALIZE REQUESTED PROMPT
 ========================================================== */
 
 function initializePrompt() {
@@ -248,16 +253,10 @@ function initializePrompt() {
 
 
 /* ==========================================================
-   EMAIL COPY NOTIFICATION
+   COPY NOTIFICATION
 ========================================================== */
 
 function notifyCopy() {
-
-    /*
-      This notification is deliberately independent of the
-      student's copy operation. If the email service happens
-      to fail, copying should still work normally.
-    */
 
     const data = new URLSearchParams();
 
@@ -274,10 +273,8 @@ function notifyCopy() {
     ).catch(() => {
 
         /*
-          Do nothing here.
-
-          A notification failure should never interfere with
-          the student's use of the prompt.
+          Notification failure should never interfere
+          with the student's copy operation.
         */
 
     });
@@ -296,20 +293,14 @@ copyButton.addEventListener("click", async () => {
 
     try {
 
-        /*
-          First make sure the copy itself succeeds.
-        */
         await navigator.clipboard.writeText(text);
 
         /*
-          Only after a successful clipboard write do we count
-          this as a copy-button use.
+          Count the event only after the clipboard
+          operation succeeds.
         */
         notifyCopy();
 
-        /*
-          Give the student visual confirmation.
-        */
         showCheckIcon();
 
         setTimeout(() => {
@@ -318,10 +309,6 @@ copyButton.addEventListener("click", async () => {
 
     } catch (err) {
 
-        /*
-          The clipboard operation itself failed.
-          Do NOT send an email notification.
-        */
         showErrorIcon("Copy failed");
 
         setTimeout(() => {
@@ -341,10 +328,8 @@ let lastHeight = 0;
 
 function resizeCanvasFrame() {
 
-    const promptBox = document.getElementById("promptBox");
-
     const height = Math.ceil(
-        promptBox.getBoundingClientRect().height
+        promptContainer.getBoundingClientRect().height
     );
 
     if (height === lastHeight) {
@@ -360,12 +345,11 @@ function resizeCanvasFrame() {
         },
         "*"
     );
-
 }
 
 
 /* ==========================================================
-   LOAD prompts.js WITHOUT USING AN OLD BROWSER CACHE
+   LOAD prompts.js FRESH EACH TIME
 ========================================================== */
 
 function loadPromptLibrary() {
@@ -373,9 +357,9 @@ function loadPromptLibrary() {
     const script = document.createElement("script");
 
     /*
-      Every page load requests prompts.js using a unique URL,
-      preventing an older browser-cached prompt library from
-      being reused.
+      Cache-busting timestamp ensures that students receive
+      the currently published prompts.js rather than an older
+      browser-cached copy.
     */
     script.src = "prompts.js?v=" + Date.now();
 
@@ -401,7 +385,7 @@ window.addEventListener("load", () => {
 
 
 /*
-  Recalculate iframe height if screen width or layout changes.
+  Recalculate height whenever wrapping/layout changes.
 */
 const resizeObserver = new ResizeObserver(() => {
     resizeCanvasFrame();
