@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    background: transparent;
+}
+
+button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #4b5563;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:hover {
+    background: rgba(0, 51, 160, 0.08);
+    color: #0033a0;
+}
+
+svg {
+    width: 17px;
+    height: 17px;
+}
+</style>
+</head>
+
+<body>
+
+<button id="copyButton" type="button" title="Copy prompt" aria-label="Copy prompt">
+    <svg viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2"
+         stroke-linecap="round"
+         stroke-linejoin="round">
+        <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+</button>
+
+<script>
+const prompts = {
+
+    "literature-search":
+`I'm doing a literature search for a research paper. First, ask me one question at a time to (1) provide my preliminary research scope and (2) identify which database I want to use (give me a choice of the top five databases subscribed to by the University of Kentucky for finding research relevant to family science, describing the scope of each database in one sentence). Once you have that information, complete the next two steps sequentially but without prompting: (a) provide a list of keywords and search terms that will help me find academic papers relevant to this topic and (b) give them some thought and show me the best keyword combinations to use in the specified database (using Boolean, parentheses, wildcards, and truncation, as needed).`
+
+};
+
+const params = new URLSearchParams(window.location.search);
+const promptID = params.get("id");
+const text = prompts[promptID] || "";
+
+const button = document.getElementById("copyButton");
+
+button.addEventListener("click", async () => {
+    try {
+        await navigator.clipboard.writeText(text);
+
+        button.innerHTML = `
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2.5"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"></path>
+        </svg>`;
+
+        button.title = "Copied";
+
+        setTimeout(() => {
+            button.innerHTML = `
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>`;
+
+            button.title = "Copy prompt";
+        }, 1200);
+
+    } catch {
+        button.title = "Copy failed";
+    }
+});
+</script>
+
+</body>
+</html>
