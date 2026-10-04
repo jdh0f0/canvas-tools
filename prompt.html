@@ -98,11 +98,21 @@ html, body {
 <script>
 
 /* ==========================================================
+   CONFIGURATION
+========================================================== */
+
+const NOTIFICATION_URL =
+    "https://script.google.com/macros/s/AKfycbyljlO43mbSLOGCEeYgFGGXH24Ov4iXlydo_YS1fI7mnW8IFCkPK9cJq6QAIyy4rUDN/exec";
+
+
+/* ==========================================================
    BASIC REFERENCES
 ========================================================== */
 
 const params = new URLSearchParams(window.location.search);
+
 const promptID = params.get("id");
+const course = params.get("course") || "Unknown course";
 
 const promptText = document.getElementById("promptText");
 const copyButton = document.getElementById("copyButton");
@@ -148,6 +158,7 @@ function showCheckIcon() {
         </svg>
     `;
 
+    copyButton.style.color = "#4b5563";
     copyButton.title = "Copied";
     copyButton.setAttribute("aria-label", "Copied");
 }
@@ -237,6 +248,43 @@ function initializePrompt() {
 
 
 /* ==========================================================
+   EMAIL COPY NOTIFICATION
+========================================================== */
+
+function notifyCopy() {
+
+    /*
+      This notification is deliberately independent of the
+      student's copy operation. If the email service happens
+      to fail, copying should still work normally.
+    */
+
+    const data = new URLSearchParams();
+
+    data.append("promptId", promptID);
+    data.append("course", course);
+
+    fetch(
+        NOTIFICATION_URL,
+        {
+            method: "POST",
+            mode: "no-cors",
+            body: data
+        }
+    ).catch(() => {
+
+        /*
+          Do nothing here.
+
+          A notification failure should never interfere with
+          the student's use of the prompt.
+        */
+
+    });
+}
+
+
+/* ==========================================================
    COPY BUTTON
 ========================================================== */
 
@@ -248,8 +296,20 @@ copyButton.addEventListener("click", async () => {
 
     try {
 
+        /*
+          First make sure the copy itself succeeds.
+        */
         await navigator.clipboard.writeText(text);
 
+        /*
+          Only after a successful clipboard write do we count
+          this as a copy-button use.
+        */
+        notifyCopy();
+
+        /*
+          Give the student visual confirmation.
+        */
         showCheckIcon();
 
         setTimeout(() => {
@@ -258,6 +318,10 @@ copyButton.addEventListener("click", async () => {
 
     } catch (err) {
 
+        /*
+          The clipboard operation itself failed.
+          Do NOT send an email notification.
+        */
         showErrorIcon("Copy failed");
 
         setTimeout(() => {
@@ -301,7 +365,7 @@ function resizeCanvasFrame() {
 
 
 /* ==========================================================
-   LOAD prompts.js WITH CACHE BUSTING
+   LOAD prompts.js WITHOUT USING AN OLD BROWSER CACHE
 ========================================================== */
 
 function loadPromptLibrary() {
@@ -309,9 +373,9 @@ function loadPromptLibrary() {
     const script = document.createElement("script");
 
     /*
-      The timestamp creates a unique URL every time:
-      prompts.js?v=...
-      This prevents an old cached version from being reused.
+      Every page load requests prompts.js using a unique URL,
+      preventing an older browser-cached prompt library from
+      being reused.
     */
     script.src = "prompts.js?v=" + Date.now();
 
@@ -332,13 +396,13 @@ function loadPromptLibrary() {
 ========================================================== */
 
 window.addEventListener("load", () => {
-
     loadPromptLibrary();
-
 });
 
 
-/* Recalculate if screen width/layout changes */
+/*
+  Recalculate iframe height if screen width or layout changes.
+*/
 const resizeObserver = new ResizeObserver(() => {
     resizeCanvasFrame();
 });
