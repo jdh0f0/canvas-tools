@@ -10,9 +10,14 @@ const prompts = {
         text: `Create a two-column table listing all sources in the exact order they appear. Column 1 (File name): reproduce the source file name exactly as it currently appears in NotebookLM. Column 2 (Author_Year): output only the author’s last name (or multiple authors’ last names) followed by an underscore and the four-digit publication year, using hyphens to separate multiple authors’ last names (e.g., Smith-Jones_2021). Include no first names, initials, titles, journal names, URLs, publishers, or extra text. Use one source per row, and output only the table with no additional commentary.`
     },
 
-    "second-prompt": {
-        title: "Second Prompt",
-        text: `PLACE YOUR SECOND PROMPT HERE.`
+    "775-apa-reference-list": {
+        title: "Create APA Reference List",
+        text: `Create a reference list that includes every uploaded source in correct APA (7th edition) format. Double- and triple-check each entry for accuracy before sharing it. If any sources seem incomplete or uncertain, list them after the reference section in bullet form, identifying what information is missing or unclear.`
+    },
+
+    "775-apa-reference-review": {
+        title: "Review APA Reference List",
+        text: `Review my reference list (I will provide it) for APA 7th-edition accuracy and consistency—including punctuation, capitalization, italics, and completeness. Then create a downloadable Microsoft Word document formatted according to APA 7th-edition reference-list standards, including Times New Roman 12-point font; double-spaced throughout (no extra spacing before or after paragraphs); left-aligned text, one-inch margins; 0.5-inch hanging indent for each entry; centered and bold “References” title; publisher name only (no location) for books and book chapters; italicize journal titles and volume numbers (but not the comma between them); use en-dashes for page ranges, and format DOIs as live URLs. After generating the file, share a download link and briefly note any remaining uncertainties about accuracy or missing information.`
     }
 
 };
