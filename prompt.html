@@ -5,86 +5,95 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-  html, body {
+html, body {
     margin: 0;
     padding: 0;
     background: transparent;
     font-family: "Segoe UI", Tahoma, sans-serif;
     color: #1f2937;
-  }
+}
 
-  .prompt-box {
+.prompt-box {
     position: relative;
     box-sizing: border-box;
     width: 100%;
     background: #f0f4fb;
     border: 1px solid rgba(0, 51, 160, 0.18);
     border-radius: 8px;
-    padding: 14px 16px 42px 16px;
+    padding: 12px 16px 20px 16px;
     font-size: 10pt;
     line-height: 1.6;
-  }
+}
 
-  .copy-button {
+.prompt-text {
+    white-space: pre-wrap;
+}
+
+.copy-button {
     position: absolute;
-    right: 10px;
-    bottom: 8px;
+    right: 8px;
+    bottom: 6px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+
+    width: 32px;
+    height: 32px;
+
     padding: 0;
     border: 0;
     border-radius: 5px;
+
     background: transparent;
     color: #4b5563;
     cursor: pointer;
-  }
+}
 
-  .copy-button:hover {
+.copy-button:hover {
     background: rgba(0, 51, 160, 0.08);
     color: #0033a0;
-  }
+}
 
-  .copy-button svg {
+.copy-button svg {
     width: 17px;
     height: 17px;
-  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="prompt-box">
-  <div id="promptText"></div>
+<div class="prompt-box" id="promptBox">
 
-  <button
-    class="copy-button"
-    id="copyButton"
-    type="button"
-    title="Copy prompt"
-    aria-label="Copy prompt"
-  >
-    <svg
-      id="copyIcon"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-    </svg>
-  </button>
+    <div class="prompt-text" id="promptText"></div>
+
+    <button
+        class="copy-button"
+        id="copyButton"
+        type="button"
+        title="Copy prompt"
+        aria-label="Copy prompt">
+
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+
+    </button>
+
 </div>
 
 <script>
+
 const prompts = {
 
-  "literature-search":
+    "literature-search":
 `I'm doing a literature search for a research paper. First, ask me one question at a time to (1) provide my preliminary research scope and (2) identify which database I want to use (give me a choice of the top five databases subscribed to by the University of Kentucky for finding research relevant to family science, describing the scope of each database in one sentence). Once you have that information, complete the next two steps sequentially but without prompting: (a) provide a list of keywords and search terms that will help me find academic papers relevant to this topic and (b) give them some thought and show me the best keyword combinations to use in the specified database (using Boolean, parentheses, wildcards, and truncation, as needed).`
 
 };
@@ -94,46 +103,113 @@ const promptID = params.get("id") || "literature-search";
 
 const text = prompts[promptID] || "Prompt not found.";
 
-document.getElementById("promptText").textContent = text;
+const promptText = document.getElementById("promptText");
+const copyButton = document.getElementById("copyButton");
 
-document.getElementById("copyButton").addEventListener("click", async function () {
-  try {
-    await navigator.clipboard.writeText(text);
+promptText.textContent = text;
 
-    const button = document.getElementById("copyButton");
 
-    button.innerHTML = `
-      <svg viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="2.5"
-           stroke-linecap="round"
-           stroke-linejoin="round">
-        <path d="M20 6L9 17l-5-5"></path>
-      </svg>
-    `;
+/* --------------------------
+   COPY BUTTON
+--------------------------- */
 
-    button.title = "Copied";
+copyButton.addEventListener("click", async () => {
 
-    setTimeout(() => {
-      button.innerHTML = `
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-          <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-      `;
-      button.title = "Copy prompt";
-    }, 1500);
+    try {
 
-  } catch (err) {
-    alert("Copy failed. Please select the text manually.");
-  }
+        await navigator.clipboard.writeText(text);
+
+        copyButton.innerHTML = `
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2.5"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+                <path d="M20 6L9 17l-5-5"></path>
+            </svg>
+        `;
+
+        copyButton.title = "Copied";
+
+        setTimeout(() => {
+
+            copyButton.innerHTML = `
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+            `;
+
+            copyButton.title = "Copy prompt";
+
+        }, 1200);
+
+    } catch (err) {
+
+        copyButton.title = "Copy failed";
+
+    }
+
 });
+
+
+/* --------------------------
+   AUTOMATIC CANVAS HEIGHT
+--------------------------- */
+
+let lastHeight = 0;
+
+function resizeCanvasFrame() {
+
+    const height = Math.ceil(
+        document.getElementById("promptBox").getBoundingClientRect().height
+    );
+
+    /*
+      Prevent endless resize messages when nothing changed.
+    */
+    if (height === lastHeight) return;
+
+    lastHeight = height;
+
+    window.parent.postMessage(
+        {
+            subject: "lti.frameResize",
+            height: height
+        },
+        "*"
+    );
+}
+
+
+/*
+  Measure after the browser has finished laying out the text.
+*/
+window.addEventListener("load", () => {
+
+    requestAnimationFrame(() => {
+        resizeCanvasFrame();
+    });
+
+});
+
+
+/*
+  Recalculate if the iframe width changes and the text
+  consequently wraps onto more or fewer lines.
+*/
+const resizeObserver = new ResizeObserver(() => {
+    resizeCanvasFrame();
+});
+
+resizeObserver.observe(document.documentElement);
+
 </script>
 
 </body>
