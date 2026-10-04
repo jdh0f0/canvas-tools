@@ -1,412 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-html,
-body {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    font-family: "Segoe UI", Tahoma, sans-serif;
-    color: #1f2937;
-    overflow: hidden;
-}
-
-.prompt-container {
-    position: relative;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    padding: 0 0 20px 0;
-    background: transparent;
-    font-size: 10pt;
-    line-height: 1.6;
-}
-
-.prompt-text {
-    white-space: pre-wrap;
-}
-
-.copy-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 32px;
-    height: 32px;
-
-    padding: 0;
-    border: 0;
-    border-radius: 5px;
-
-    background: transparent;
-    color: #4b5563;
-    cursor: pointer;
-}
-
-.copy-button:hover:not(:disabled) {
-    background: rgba(0, 51, 160, 0.08);
-    color: #0033a0;
-}
-
-.copy-button:disabled {
-    cursor: not-allowed;
-}
-
-.copy-button svg {
-    width: 17px;
-    height: 17px;
-}
-
-.prompt-error {
-    color: #b91c1c;
-    font-weight: 600;
-}
-</style>
-</head>
-
-<body>
-
-<div class="prompt-container" id="promptContainer">
-
-    <div class="prompt-text" id="promptText">Loading prompt...</div>
-
-    <button
-        class="copy-button"
-        id="copyButton"
-        type="button"
-        title="Copy prompt"
-        aria-label="Copy prompt"
-        disabled>
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-
-    </button>
-
-</div>
-
-<script>
-
-/* ==========================================================
-   CONFIGURATION
-========================================================== */
-
-const NOTIFICATION_URL =
-    "https://script.google.com/macros/s/AKfycbyljlO43mbSLOGCEeYgFGGXH24Ov4iXlydo_YS1fI7mnW8IFCkPK9cJq6QAIyy4rUDN/exec";
-
-
-/* ==========================================================
-   BASIC REFERENCES
-========================================================== */
-
-const params = new URLSearchParams(window.location.search);
-
-const promptID = params.get("id");
-const course = params.get("course") || "Unknown course";
-
-const promptContainer = document.getElementById("promptContainer");
-const promptText = document.getElementById("promptText");
-const copyButton = document.getElementById("copyButton");
-
-let text = "";
-let promptExists = false;
-
-
-/* ==========================================================
-   ICON HELPERS
-========================================================== */
-
-function showCopyIcon() {
-
-    copyButton.innerHTML = `
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-    `;
-
-    copyButton.style.color = "#4b5563";
-    copyButton.title = "Copy prompt";
-    copyButton.setAttribute("aria-label", "Copy prompt");
-}
-
-
-function showCheckIcon() {
-
-    copyButton.innerHTML = `
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2.5"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-            <path d="M20 6L9 17l-5-5"></path>
-        </svg>
-    `;
-
-    copyButton.style.color = "#4b5563";
-    copyButton.title = "Copied";
-    copyButton.setAttribute("aria-label", "Copied");
-}
-
-
-function showErrorIcon(message) {
-
-    copyButton.innerHTML = `
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2.5"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-            <path d="M18 6L6 18"></path>
-            <path d="M6 6l12 12"></path>
-        </svg>
-    `;
-
-    copyButton.style.color = "#b91c1c";
-    copyButton.title = message;
-    copyButton.setAttribute("aria-label", message);
-}
-
-
-/* ==========================================================
-   ERROR HANDLING
-========================================================== */
-
-function displayError(message) {
-
-    promptExists = false;
-    text = "";
-
-    promptText.textContent = message;
-    promptText.classList.add("prompt-error");
-
-    copyButton.disabled = true;
-
-    showErrorIcon(message);
-
-    scheduleResize();
-}
-
-
-/* ==========================================================
-   INITIALIZE PROMPT
-========================================================== */
-
-function initializePrompt() {
-
-    if (!promptID) {
-        displayError("Prompt ID missing.");
-        return;
-    }
-
-    if (typeof prompts === "undefined") {
-        displayError("Prompt library could not be loaded.");
-        return;
-    }
-
-    const prompt = prompts[promptID];
-
-    if (!prompt) {
-        displayError(`Prompt not found: ${promptID}`);
-        return;
-    }
-
-    promptExists = true;
-    text = prompt.text;
-
-    promptText.classList.remove("prompt-error");
-    promptText.textContent = text;
-
-    copyButton.disabled = false;
-
-    showCopyIcon();
-
-    if (prompt.title) {
-        document.title = prompt.title;
-    }
-
-    scheduleResize();
-}
-
-
-/* ==========================================================
-   COPY NOTIFICATION
-========================================================== */
-
-function notifyCopy() {
-
-    const data = new URLSearchParams();
-
-    data.append("promptId", promptID);
-    data.append("course", course);
-
-    fetch(
-        NOTIFICATION_URL,
-        {
-            method: "POST",
-            mode: "no-cors",
-            body: data
-        }
-    ).catch(() => {
-        /* Notification failure must not affect copying */
-    });
-}
-
-
-/* ==========================================================
-   COPY BUTTON
-========================================================== */
-
-copyButton.addEventListener("click", async () => {
-
-    if (!promptExists) {
-        return;
-    }
-
-    try {
-
-        await navigator.clipboard.writeText(text);
-
-        notifyCopy();
-
-        showCheckIcon();
-
-        setTimeout(() => {
-            showCopyIcon();
-        }, 1200);
-
-    } catch (err) {
-
-        showErrorIcon("Copy failed");
-
-        setTimeout(() => {
-            showCopyIcon();
-        }, 1500);
-
-    }
-
-});
-
-
-/* ==========================================================
-   AUTOMATIC CANVAS IFRAME HEIGHT
-========================================================== */
-
-function resizeCanvasFrame() {
-
-    /*
-      scrollHeight gives us the full rendered content height
-      even if the iframe is currently too short.
-    */
-    const height = Math.ceil(
-        Math.max(
-            document.body.scrollHeight,
-            document.documentElement.scrollHeight,
-            promptContainer.scrollHeight
-        )
-    );
-
-    window.parent.postMessage(
-        {
-            subject: "lti.frameResize",
-            height: height
-        },
-        "*"
-    );
-}
-
-
-/*
-  Canvas may not be ready for the first message immediately,
-  so send several measurements during initial rendering.
-*/
-function scheduleResize() {
-
-    requestAnimationFrame(() => {
-        resizeCanvasFrame();
-    });
-
-    setTimeout(resizeCanvasFrame, 100);
-    setTimeout(resizeCanvasFrame, 300);
-    setTimeout(resizeCanvasFrame, 750);
-}
-
-
-/*
-  Re-measure whenever text wrapping or dimensions change.
-*/
-const resizeObserver = new ResizeObserver(() => {
-    resizeCanvasFrame();
-});
-
-resizeObserver.observe(promptContainer);
-
-
-/*
-  Also respond to browser/iframe width changes.
-*/
-window.addEventListener("resize", () => {
-    resizeCanvasFrame();
-});
-
-
-/* ==========================================================
-   LOAD prompts.js FRESH EACH TIME
-========================================================== */
-
-function loadPromptLibrary() {
-
-    const script = document.createElement("script");
-
-    script.src = "prompts.js?v=" + Date.now();
-
-    script.onload = () => {
-        initializePrompt();
-    };
-
-    script.onerror = () => {
-        displayError("Prompt library could not be loaded.");
-    };
-
-    document.head.appendChild(script);
-}
-
-
-/* ==========================================================
-   INITIALIZATION
-========================================================== */
-
-window.addEventListener("load", () => {
-
-    loadPromptLibrary();
-
-    scheduleResize();
-
-});
-
-</script>
-
-</body>
-</html>
+<section style="background: #e9efff; border-left: 6px solid #5A7DE1; border-radius: 12px; padding: 20px 24px; margin-top: 22px;">
+
+    <h3 style="margin-top: 0; color: #0033a0;">
+        2. Identify Search Terms
+
+        <span class="fam690-genai"
+              style="float: right; margin: 0 0 12px 16px; position: relative; display: inline-block;"
+              aria-label="Generative AI Use Scale: 3">
+
+            <img class="fam690-genai-badge"
+                 src="https://uk.instructure.com/courses/2170186/files/117105185/download?"
+                 alt="GenAI Use Scale: 3"
+                 width="112"
+                 height="94"
+                 data-api-endpoint="https://uk.instructure.com/api/v1/courses/2170186/files/117105185"
+                 data-api-returntype="File" />
+
+            <span class="fam690-genai-pop" style="display: none;"></span>
+
+        </span>
+    </h3>
+
+    <p>
+        Use
+        <a class="external"
+           href="https://chatgpt.com/g/g-673913ab41d08191a59be643ea8fb1e7-research-sage"
+           target="_blank"
+           rel="noopener">Research Sage</a>&mdash;a generative pre-trained transformer (GPT)
+        designed for FAM 690: Research Methods&mdash;to produce advanced search phrases for use
+        with library databases, starting with the following prompt:
+    </p>
+
+    <div style="background-color: #eef4ff;
+                border: 1px solid #c7d2fe;
+                border-radius: 8px;
+                padding: 12px;
+                margin: 14px 0;">
+
+        <iframe
+            src="https://jdh0f0.github.io/canvas-tools/prompt.html?v=8&amp;id=775-literature-search&amp;course=FAM775"
+            width="100%"
+            height="240"
+            allow="clipboard-write"
+            title="Literature search prompt"
+            style="display: block;
+                   width: 100%;
+                   margin: 0;
+                   padding: 0;
+                   overflow: hidden;
+                   border: 0;">
+        </iframe>
+
+    </div>
+
+    <p style="font-size: 12pt;">
+        This concludes your use of Research Sage for this assignment.
+        Click <strong>Share</strong> in the top-right corner of the Research Sage screen,
+        select &ldquo;copy link,&rdquo; and paste that link into your homework document.
+    </p>
+
+</section>
