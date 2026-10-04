@@ -71,14 +71,15 @@ html, body {
 
 <div class="prompt-box" id="promptBox">
 
-    <div class="prompt-text" id="promptText"></div>
+    <div class="prompt-text" id="promptText">Loading prompt...</div>
 
     <button
         class="copy-button"
         id="copyButton"
         type="button"
         title="Copy prompt"
-        aria-label="Copy prompt">
+        aria-label="Copy prompt"
+        disabled>
 
         <svg viewBox="0 0 24 24"
              fill="none"
@@ -94,12 +95,10 @@ html, body {
 
 </div>
 
-<script src="prompts.js"></script>
-
 <script>
 
 /* ==========================================================
-   IDENTIFY REQUESTED PROMPT
+   BASIC REFERENCES
 ========================================================== */
 
 const params = new URLSearchParams(window.location.search);
@@ -113,16 +112,48 @@ let promptExists = false;
 
 
 /* ==========================================================
-   LOAD PROMPT OR DISPLAY ERROR
+   ICON HELPERS
 ========================================================== */
 
-if (!promptID) {
+function showCopyIcon() {
 
-    promptText.textContent = "Prompt ID missing.";
-    promptText.classList.add("prompt-error");
+    copyButton.innerHTML = `
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+    `;
 
-    copyButton.disabled = true;
-    copyButton.style.color = "#b91c1c";
+    copyButton.style.color = "#4b5563";
+    copyButton.title = "Copy prompt";
+    copyButton.setAttribute("aria-label", "Copy prompt");
+}
+
+
+function showCheckIcon() {
+
+    copyButton.innerHTML = `
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2.5"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"></path>
+        </svg>
+    `;
+
+    copyButton.title = "Copied";
+    copyButton.setAttribute("aria-label", "Copied");
+}
+
+
+function showErrorIcon(message) {
 
     copyButton.innerHTML = `
         <svg viewBox="0 0 24 24"
@@ -136,45 +167,72 @@ if (!promptID) {
         </svg>
     `;
 
-    copyButton.title = "Prompt ID missing";
-    copyButton.setAttribute("aria-label", "Prompt ID missing");
+    copyButton.style.color = "#b91c1c";
+    copyButton.title = message;
+    copyButton.setAttribute("aria-label", message);
+}
 
-} else if (!prompts[promptID]) {
 
-    promptText.textContent = `Prompt not found: ${promptID}`;
+/* ==========================================================
+   DISPLAY ERROR
+========================================================== */
+
+function displayError(message) {
+
+    promptExists = false;
+    text = "";
+
+    promptText.textContent = message;
     promptText.classList.add("prompt-error");
 
     copyButton.disabled = true;
-    copyButton.style.color = "#b91c1c";
 
-    copyButton.innerHTML = `
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2.5"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-            <path d="M18 6L6 18"></path>
-            <path d="M6 6l12 12"></path>
-        </svg>
-    `;
+    showErrorIcon(message);
 
-    copyButton.title = "Prompt not found";
-    copyButton.setAttribute("aria-label", "Prompt not found");
+    resizeCanvasFrame();
+}
 
-} else {
+
+/* ==========================================================
+   LOAD PROMPT
+========================================================== */
+
+function initializePrompt() {
+
+    if (!promptID) {
+        displayError("Prompt ID missing.");
+        return;
+    }
+
+    if (typeof prompts === "undefined") {
+        displayError("Prompt library could not be loaded.");
+        return;
+    }
 
     const prompt = prompts[promptID];
+
+    if (!prompt) {
+        displayError(`Prompt not found: ${promptID}`);
+        return;
+    }
 
     promptExists = true;
     text = prompt.text;
 
+    promptText.classList.remove("prompt-error");
     promptText.textContent = text;
+
+    copyButton.disabled = false;
+
+    showCopyIcon();
 
     if (prompt.title) {
         document.title = prompt.title;
     }
 
+    requestAnimationFrame(() => {
+        resizeCanvasFrame();
+    });
 }
 
 
@@ -192,73 +250,18 @@ copyButton.addEventListener("click", async () => {
 
         await navigator.clipboard.writeText(text);
 
-        copyButton.innerHTML = `
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2.5"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-                <path d="M20 6L9 17l-5-5"></path>
-            </svg>
-        `;
-
-        copyButton.title = "Copied";
-        copyButton.setAttribute("aria-label", "Copied");
+        showCheckIcon();
 
         setTimeout(() => {
-
-            copyButton.innerHTML = `
-                <svg viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-            `;
-
-            copyButton.title = "Copy prompt";
-            copyButton.setAttribute("aria-label", "Copy prompt");
-
+            showCopyIcon();
         }, 1200);
 
     } catch (err) {
 
-        copyButton.innerHTML = `
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="#b91c1c"
-                 stroke-width="2.5"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-                <path d="M18 6L6 18"></path>
-                <path d="M6 6l12 12"></path>
-            </svg>
-        `;
-
-        copyButton.title = "Copy failed";
-        copyButton.setAttribute("aria-label", "Copy failed");
+        showErrorIcon("Copy failed");
 
         setTimeout(() => {
-
-            copyButton.innerHTML = `
-                <svg viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-            `;
-
-            copyButton.title = "Copy prompt";
-            copyButton.setAttribute("aria-label", "Copy prompt");
-
+            showCopyIcon();
         }, 1500);
 
     }
@@ -297,17 +300,45 @@ function resizeCanvasFrame() {
 }
 
 
-/* Initial sizing */
+/* ==========================================================
+   LOAD prompts.js WITH CACHE BUSTING
+========================================================== */
+
+function loadPromptLibrary() {
+
+    const script = document.createElement("script");
+
+    /*
+      The timestamp creates a unique URL every time:
+      prompts.js?v=...
+      This prevents an old cached version from being reused.
+    */
+    script.src = "prompts.js?v=" + Date.now();
+
+    script.onload = () => {
+        initializePrompt();
+    };
+
+    script.onerror = () => {
+        displayError("Prompt library could not be loaded.");
+    };
+
+    document.head.appendChild(script);
+}
+
+
+/* ==========================================================
+   INITIALIZATION
+========================================================== */
+
 window.addEventListener("load", () => {
 
-    requestAnimationFrame(() => {
-        resizeCanvasFrame();
-    });
+    loadPromptLibrary();
 
 });
 
 
-/* Recalculate when width/layout changes */
+/* Recalculate if screen width/layout changes */
 const resizeObserver = new ResizeObserver(() => {
     resizeCanvasFrame();
 });
