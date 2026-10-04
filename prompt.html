@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     background: transparent;
@@ -17,10 +18,13 @@ html, body {
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    background: #f0f4fb;
-    border: 1px solid rgba(0, 51, 160, 0.18);
+
+    background-color: #eef4ff;
+    border: 1px solid #c7d2fe;
     border-radius: 8px;
+
     padding: 12px 16px 20px 16px;
+
     font-size: 10pt;
     line-height: 1.6;
 }
@@ -33,14 +37,18 @@ html, body {
     position: absolute;
     right: 8px;
     bottom: 6px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 32px;
     height: 32px;
+
     padding: 0;
     border: 0;
     border-radius: 5px;
+
     background: transparent;
     color: #4b5563;
     cursor: pointer;
@@ -70,6 +78,7 @@ html, body {
 <body>
 
 <div class="prompt-box" id="promptBox">
+
     <div class="prompt-text" id="promptText">Loading prompt...</div>
 
     <button
@@ -89,15 +98,18 @@ html, body {
             <rect x="9" y="9" width="13" height="13" rx="2"></rect>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
         </svg>
+
     </button>
+
 </div>
 
 <script>
 
 const NOTIFICATION_URL =
-"https://script.google.com/macros/s/AKfycbyljlO43mbSLOGCEeYgFGGXH24Ov4iXlydo_YS1fI7mnW8IFCkPK9cJq6QAIyy4rUDN/exec";
+    "https://script.google.com/macros/s/AKfycbyljlO43mbSLOGCEeYgFGGXH24Ov4iXlydo_YS1fI7mnW8IFCkPK9cJq6QAIyy4rUDN/exec";
 
 const params = new URLSearchParams(window.location.search);
+
 const promptID = params.get("id");
 const course = params.get("course") || "Unknown course";
 
@@ -109,7 +121,12 @@ let text = "";
 let promptExists = false;
 
 
+/* ==========================================================
+   ICONS
+========================================================== */
+
 function showCopyIcon() {
+
     copyButton.innerHTML = `
         <svg viewBox="0 0 24 24"
              fill="none"
@@ -119,7 +136,9 @@ function showCopyIcon() {
              stroke-linejoin="round">
             <rect x="9" y="9" width="13" height="13" rx="2"></rect>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>`;
+        </svg>
+    `;
+
     copyButton.style.color = "#4b5563";
     copyButton.title = "Copy prompt";
     copyButton.setAttribute("aria-label", "Copy prompt");
@@ -127,6 +146,7 @@ function showCopyIcon() {
 
 
 function showCheckIcon() {
+
     copyButton.innerHTML = `
         <svg viewBox="0 0 24 24"
              fill="none"
@@ -135,13 +155,17 @@ function showCheckIcon() {
              stroke-linecap="round"
              stroke-linejoin="round">
             <path d="M20 6L9 17l-5-5"></path>
-        </svg>`;
+        </svg>
+    `;
+
+    copyButton.style.color = "#4b5563";
     copyButton.title = "Copied";
     copyButton.setAttribute("aria-label", "Copied");
 }
 
 
 function showErrorIcon(message) {
+
     copyButton.innerHTML = `
         <svg viewBox="0 0 24 24"
              fill="none"
@@ -151,31 +175,51 @@ function showErrorIcon(message) {
              stroke-linejoin="round">
             <path d="M18 6L6 18"></path>
             <path d="M6 6l12 12"></path>
-        </svg>`;
+        </svg>
+    `;
+
     copyButton.style.color = "#b91c1c";
     copyButton.title = message;
     copyButton.setAttribute("aria-label", message);
 }
 
 
-function resizeCanvasFrame() {
-    const height = Math.ceil(promptBox.getBoundingClientRect().height);
+/* ==========================================================
+   RESIZE CANVAS IFRAME
+========================================================== */
 
-    window.parent.postMessage({
-        subject: "lti.frameResize",
-        height: height
-    }, "*");
+function resizeCanvasFrame() {
+
+    const height = Math.ceil(
+        promptBox.getBoundingClientRect().height
+    );
+
+    window.parent.postMessage(
+        {
+            subject: "lti.frameResize",
+            height: height
+        },
+        "*"
+    );
 }
 
 
-function resizeSeveralTimes() {
+function scheduleResize() {
+
     requestAnimationFrame(resizeCanvasFrame);
+
     setTimeout(resizeCanvasFrame, 100);
     setTimeout(resizeCanvasFrame, 300);
+    setTimeout(resizeCanvasFrame, 700);
 }
 
 
+/* ==========================================================
+   ERRORS
+========================================================== */
+
 function displayError(message) {
+
     promptExists = false;
     text = "";
 
@@ -183,11 +227,16 @@ function displayError(message) {
     promptText.classList.add("prompt-error");
 
     copyButton.disabled = true;
+
     showErrorIcon(message);
 
-    resizeSeveralTimes();
+    scheduleResize();
 }
 
+
+/* ==========================================================
+   LOAD PROMPT
+========================================================== */
 
 function initializePrompt() {
 
@@ -215,15 +264,20 @@ function initializePrompt() {
     promptText.textContent = text;
 
     copyButton.disabled = false;
+
     showCopyIcon();
 
     if (prompt.title) {
         document.title = prompt.title;
     }
 
-    resizeSeveralTimes();
+    scheduleResize();
 }
 
+
+/* ==========================================================
+   EMAIL NOTIFICATION
+========================================================== */
 
 function notifyCopy() {
 
@@ -232,32 +286,59 @@ function notifyCopy() {
     data.append("promptId", promptID);
     data.append("course", course);
 
-    fetch(NOTIFICATION_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: data
-    }).catch(() => {});
+    fetch(
+        NOTIFICATION_URL,
+        {
+            method: "POST",
+            mode: "no-cors",
+            body: data
+        }
+    ).catch(() => {
+
+        /* Notification failure does not affect copying */
+
+    });
 }
 
 
+/* ==========================================================
+   COPY
+========================================================== */
+
 copyButton.addEventListener("click", async () => {
 
-    if (!promptExists) return;
+    if (!promptExists) {
+        return;
+    }
 
     try {
+
         await navigator.clipboard.writeText(text);
 
         notifyCopy();
+
         showCheckIcon();
 
-        setTimeout(showCopyIcon, 1200);
+        setTimeout(() => {
+            showCopyIcon();
+        }, 1200);
 
-    } catch {
+    } catch (err) {
+
         showErrorIcon("Copy failed");
-        setTimeout(showCopyIcon, 1500);
+
+        setTimeout(() => {
+            showCopyIcon();
+        }, 1500);
+
     }
+
 });
 
+
+/* ==========================================================
+   LOAD CURRENT prompts.js
+========================================================== */
 
 function loadPromptLibrary() {
 
@@ -275,9 +356,18 @@ function loadPromptLibrary() {
 }
 
 
+/* ==========================================================
+   RESPONSIVE HEIGHT
+========================================================== */
+
 window.addEventListener("load", loadPromptLibrary);
 
-const resizeObserver = new ResizeObserver(resizeCanvasFrame);
+window.addEventListener("resize", scheduleResize);
+
+const resizeObserver = new ResizeObserver(() => {
+    scheduleResize();
+});
+
 resizeObserver.observe(promptBox);
 
 </script>
