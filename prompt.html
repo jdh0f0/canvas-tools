@@ -12,6 +12,7 @@ body {
     background: transparent;
     font-family: "Segoe UI", Tahoma, sans-serif;
     color: #1f2937;
+    overflow: hidden;
 }
 
 .prompt-container {
@@ -205,12 +206,12 @@ function displayError(message) {
 
     showErrorIcon(message);
 
-    resizeCanvasFrame();
+    scheduleResize();
 }
 
 
 /* ==========================================================
-   INITIALIZE REQUESTED PROMPT
+   INITIALIZE PROMPT
 ========================================================== */
 
 function initializePrompt() {
@@ -246,9 +247,7 @@ function initializePrompt() {
         document.title = prompt.title;
     }
 
-    requestAnimationFrame(() => {
-        resizeCanvasFrame();
-    });
+    scheduleResize();
 }
 
 
@@ -271,12 +270,7 @@ function notifyCopy() {
             body: data
         }
     ).catch(() => {
-
-        /*
-          Notification failure should never interfere
-          with the student's copy operation.
-        */
-
+        /* Notification failure must not affect copying */
     });
 }
 
@@ -295,10 +289,6 @@ copyButton.addEventListener("click", async () => {
 
         await navigator.clipboard.writeText(text);
 
-        /*
-          Count the event only after the clipboard
-          operation succeeds.
-        */
         notifyCopy();
 
         showCheckIcon();
@@ -324,19 +314,19 @@ copyButton.addEventListener("click", async () => {
    AUTOMATIC CANVAS IFRAME HEIGHT
 ========================================================== */
 
-let lastHeight = 0;
-
 function resizeCanvasFrame() {
 
+    /*
+      scrollHeight gives us the full rendered content height
+      even if the iframe is currently too short.
+    */
     const height = Math.ceil(
-        promptContainer.getBoundingClientRect().height
+        Math.max(
+            document.body.scrollHeight,
+            document.documentElement.scrollHeight,
+            promptContainer.scrollHeight
+        )
     );
-
-    if (height === lastHeight) {
-        return;
-    }
-
-    lastHeight = height;
 
     window.parent.postMessage(
         {
@@ -348,6 +338,40 @@ function resizeCanvasFrame() {
 }
 
 
+/*
+  Canvas may not be ready for the first message immediately,
+  so send several measurements during initial rendering.
+*/
+function scheduleResize() {
+
+    requestAnimationFrame(() => {
+        resizeCanvasFrame();
+    });
+
+    setTimeout(resizeCanvasFrame, 100);
+    setTimeout(resizeCanvasFrame, 300);
+    setTimeout(resizeCanvasFrame, 750);
+}
+
+
+/*
+  Re-measure whenever text wrapping or dimensions change.
+*/
+const resizeObserver = new ResizeObserver(() => {
+    resizeCanvasFrame();
+});
+
+resizeObserver.observe(promptContainer);
+
+
+/*
+  Also respond to browser/iframe width changes.
+*/
+window.addEventListener("resize", () => {
+    resizeCanvasFrame();
+});
+
+
 /* ==========================================================
    LOAD prompts.js FRESH EACH TIME
 ========================================================== */
@@ -356,11 +380,6 @@ function loadPromptLibrary() {
 
     const script = document.createElement("script");
 
-    /*
-      Cache-busting timestamp ensures that students receive
-      the currently published prompts.js rather than an older
-      browser-cached copy.
-    */
     script.src = "prompts.js?v=" + Date.now();
 
     script.onload = () => {
@@ -380,18 +399,12 @@ function loadPromptLibrary() {
 ========================================================== */
 
 window.addEventListener("load", () => {
+
     loadPromptLibrary();
+
+    scheduleResize();
+
 });
-
-
-/*
-  Recalculate height whenever wrapping/layout changes.
-*/
-const resizeObserver = new ResizeObserver(() => {
-    resizeCanvasFrame();
-});
-
-resizeObserver.observe(document.documentElement);
 
 </script>
 
