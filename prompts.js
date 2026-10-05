@@ -236,6 +236,31 @@ Present the results as a structured table with these columns:
 Theme | Specific Research Gap or Question | Supporting Studies (APA citation) | First Mentioned (Year) | Most Recent Discussion (Year) | Status (Unresolved / Partially Addressed / Resolved)
 
 Conclude with a 4–6 sentence summary describing the most pressing or emerging priorities for future research.`
+    },
+
+
+    /* =========================================================
+       ASSIGNMENT 3 — LITERATURE REVIEW DEVELOPMENT AND ENHANCEMENT
+       ========================================================= */
+
+    "775-litreview-outline-sage": {
+        title: "Literature Review Outline — Research Sage",
+        text: `I'm writing a literature review to introduce a research study for a manuscript I'm writing in my doctoral program. Start by asking me to provide the focus of my study, then suggest an outline for the literature review.`
+    },
+
+    "775-litreview-outline-gemini": {
+        title: "Literature Review Outline — Gemini Notebook",
+        text: `I'm writing a literature review centered around the source files to introduce a research study for a manuscript I'm writing in my doctoral program on **[insert one of the research gaps you identified last week]**. Given this focus, please suggest an outline for the literature review.`
+    },
+
+    "775-litreview-feedback-chatgpt": {
+        title: "Literature Review Feedback — ChatGPT",
+        text: `I have written the attached literature review for a study I'm working on. I would like help revising the text to enhance its clarity, coherence, and conciseness. Please ensure that each paragraph transitions smoothly into the next and that the tone is professional and suitable for academic writing. I would also appreciate feedback on sentence structure, word choice, and overall readability, along with suggestions for making the text more engaging while maintaining scholarly standards. Additionally, please identify any issues with APA style, including in-text citations, headings, or references, and provide recommendations for improvement.`
+    },
+
+    "775-litreview-feedback-sage": {
+        title: "Literature Review Feedback — Research Sage",
+        text: `I have written the attached literature review for a study I'm working on. I would like help revising the text to enhance its clarity, coherence, and conciseness. Please ensure that each paragraph transitions smoothly into the next and that the tone is professional and suitable for academic writing. I would also appreciate feedback on sentence structure, word choice, and overall readability, along with suggestions to make the text more engaging while adhering to scholarly standards. Additionally, please identify any issues with APA style, including in-text citations, headings, or references, and provide recommendations for improvement.`
     }
 
 };
