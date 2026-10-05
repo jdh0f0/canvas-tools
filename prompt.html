@@ -24,13 +24,16 @@ body {
     border-radius: 8px;
 
     padding: 12px 16px 20px 16px;
-
     font-size: 10pt;
     line-height: 1.6;
 }
 
 .prompt-text {
     white-space: pre-wrap;
+}
+
+.prompt-text strong {
+    font-weight: 700;
 }
 
 .copy-button {
@@ -104,7 +107,6 @@ body {
 </div>
 
 <script>
-
 const NOTIFICATION_URL =
     "https://script.google.com/macros/s/AKfycbyljlO43mbSLOGCEeYgFGGXH24Ov4iXlydo_YS1fI7mnW8IFCkPK9cJq6QAIyy4rUDN/exec";
 
@@ -119,6 +121,34 @@ const copyButton = document.getElementById("copyButton");
 
 let text = "";
 let promptExists = false;
+
+
+/* ==========================================================
+   FORMAT PROMPT
+========================================================== */
+
+function escapeHTML(value) {
+
+    return value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function formatPromptForDisplay(value) {
+
+    return escapeHTML(value)
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
+
+function formatPromptForClipboard(value) {
+
+    return value.replace(/\*\*(.+?)\*\*/g, "$1");
+}
 
 
 /* ==========================================================
@@ -261,7 +291,12 @@ function initializePrompt() {
     text = prompt.text;
 
     promptText.classList.remove("prompt-error");
-    promptText.textContent = text;
+
+    /*
+       Display **text** as bold while preserving all original
+       line breaks and spacing in the prompt.
+    */
+    promptText.innerHTML = formatPromptForDisplay(text);
 
     copyButton.disabled = false;
 
@@ -313,7 +348,13 @@ copyButton.addEventListener("click", async () => {
 
     try {
 
-        await navigator.clipboard.writeText(text);
+        /*
+           Copy clean plain text. The ** markers used only
+           for visual formatting are removed.
+        */
+        await navigator.clipboard.writeText(
+            formatPromptForClipboard(text)
+        );
 
         notifyCopy();
 
@@ -361,7 +402,6 @@ function loadPromptLibrary() {
 ========================================================== */
 
 window.addEventListener("load", loadPromptLibrary);
-
 window.addEventListener("resize", scheduleResize);
 
 const resizeObserver = new ResizeObserver(() => {
