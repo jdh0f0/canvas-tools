@@ -269,7 +269,28 @@ Conclude with a 4–6 sentence summary describing the most pressing or emerging 
 
     "775-presentations-conference": {
         title: "Research Conference Presentation",
-        text: "Create a professional, visually polished PowerPoint presentation based on my attached research document. The presentation should be suitable for a 15-minute academic research conference presentation attended by family scientists.\n\n**Research Content**\n\n- Accurately summarize the research problem, theoretical and empirical background, and contribution to the literature.\n\n- Present the research questions or hypotheses and their theoretical or empirical rationale.\n\n- Describe the research design, sample, measures, procedures, and analytical methods, emphasizing details necessary to evaluate the study.\n\n- If this is completed research, prioritize the principal findings and preserve the reported statistical results, including estimates, effect sizes, and measures of uncertainty where available.\n\n- If this is a proposal, describe the planned methodology and anticipated contributions without inventing findings or presenting proposed analyses as completed.\n\n- Explain the implications, limitations, and conclusions without overstating what the evidence establishes.\n\n- Do not fabricate information, research findings, citations, or references.\n\n**Presentation Design**\n\n- Create approximately 8–12 slides, adjusting the number to fit a 15-minute presentation.\n\n- Use widescreen (16:9) format and a consistent, professional academic design.\n\n- Prioritize meaningful figures, conceptual diagrams, tables, and graphical representations of findings over lengthy bullet lists.\n\n- Use informative slide titles and readable typography.\n\n- Include appropriate citations for scholarly claims and visuals.\n\n- Include speaker notes with supporting explanations where feasible.\n\n- Conclude with the principal contributions, implications, or next steps.\n\n**Process**\n\nFirst, propose a slide-by-slide outline identifying the main message and recommended visual for each slide. Give me an opportunity to revise the outline before generating the presentation. After I approve the outline, create an editable PowerPoint presentation."
+        text: "Create a professional, visually polished PowerPoint presentation based on my attached research document. The presentation should be suitable for a 15-minute academic research conference presentation attended by family scientists.
+            
+        **Research Content**
+        Accurately summarize the research problem, theoretical and empirical background, and contribution to the literature.
+        Present the research questions or hypotheses and their theoretical or empirical rationale.
+        Describe the research design, sample, measures, procedures, and analytical methods, emphasizing details necessary to evaluate the study.
+        If this is completed research, prioritize the principal findings and preserve the reported statistical results, including estimates, effect sizes, and measures of uncertainty where available.
+        If this is a proposal, describe the planned methodology and anticipated contributions without inventing findings or presenting proposed analyses as completed.
+        Explain the implications, limitations, and conclusions without overstating what the evidence establishes.
+        Do not fabricate information, research findings, citations, or references.
+    
+        **Presentation Design**
+        Create approximately 8–12 slides, adjusting the number to fit a 15-minute presentation.
+        Use widescreen (16:9) format and a consistent, professional academic design.
+        Prioritize meaningful figures, conceptual diagrams, tables, and graphical representations of findings over lengthy bullet lists.
+        Use informative slide titles and readable typography.
+        Include appropriate citations for scholarly claims and visuals.
+        Include speaker notes with supporting explanations where feasible.
+        Conclude with the principal contributions, implications, or next steps.
+    
+        **Process**
+        First, propose a slide-by-slide outline identifying the main message and recommended visual for each slide. Give me an opportunity to revise the outline before generating the presentation. After I approve the outline, create an editable PowerPoint presentation."
     },
 
     "775-presentations-literature-review": {
