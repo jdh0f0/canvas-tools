@@ -297,12 +297,93 @@ Conclude with a 4–6 sentence summary describing the most pressing or emerging 
 
     "775-presentations-literature-review": {
         title: "Visual Literature Review",
-        text: "Create a comprehensive, professional, and visually engaging Visual Literature Review using the scholarly articles contained in this notebook.\n\nThe purpose is to develop an information-rich visual reference resource that will help me understand, organize, and synthesize this body of research. This is not an oral presentation.\n\n**Scholarly Content**\n\n- Organize the literature thematically rather than summarizing articles individually.\n\n- Identify the major theoretical perspectives, conceptual frameworks, research questions, and empirical findings across the sources.\n\n- Synthesize findings across studies, emphasizing patterns, convergent findings, contradictory evidence, and unresolved questions.\n\n- Compare studies based on research design, populations, measurement, analytical approaches, and findings when useful.\n\n- Incorporate specific quantitative findings where informative, preserving the reported values and interpretations.\n\n- Distinguish well-supported conclusions from preliminary, mixed, or contested evidence.\n\n- Identify methodological limitations, gaps in the literature, and promising directions for future research.\n\n- Provide citations identifying the original articles supporting substantive claims.\n\n**Visual Design**\n\n- Treat each slide as a relatively self-contained, infographic-style visual summary addressing one important concept, theory, empirical pattern, methodological issue, or theme.\n\n- Use conceptual diagrams, evidence maps, comparison tables, thematic groupings, timelines, and other meaningful visuals.\n\n- Favor informative, content-rich layouts over traditional oral-presentation slides with sparse bullet points.\n\n- Maintain consistent academic styling, logical organization, clear headings, and readable text.\n\n- Include an integrated overview of the literature and its principal unanswered questions.\n\n- Do not target a predetermined number of slides. Instead, generate as many as are useful to provide a thorough, coherent synthesis without unnecessary repetition.\n\n**Accuracy**\n\nBase all scholarly claims on the documents in this notebook. Do not invent research findings, statistical results, citations, theoretical relationships, or visual representations of data. Identify limitations and inconsistencies in the evidence rather than concealing them."
+        text: `Create a comprehensive, professional, and visually engaging Visual Literature Review using the scholarly articles contained in this notebook.
+        The purpose is to develop an information-rich visual reference resource that will help me understand, organize, and synthesize this body of research. This is not an oral presentation.
+
+        **Scholarly Content**
+        - Organize the literature thematically rather than summarizing articles individually.
+        - Identify the major theoretical perspectives, conceptual frameworks, research questions, and empirical findings across the sources.
+        - Synthesize findings across studies, emphasizing patterns, convergent findings, contradictory evidence, and unresolved questions.
+        - Compare studies based on research design, populations, measurement, analytical approaches, and findings when useful.
+        - Incorporate specific quantitative findings where informative, preserving the reported values and interpretations.
+        - Distinguish well-supported conclusions from preliminary, mixed, or contested evidence.
+        - Identify methodological limitations, gaps in the literature, and promising directions for future research.
+        - Provide citations identifying the original articles supporting substantive claims.
+
+        **Visual Design**
+        - Treat each slide as a relatively self-contained, infographic-style visual summary addressing one important concept, theory, empirical pattern, methodological issue, or theme.
+        - Use conceptual diagrams, evidence maps, comparison tables, thematic groupings, timelines, and other meaningful visuals.
+        - Favor informative, content-rich layouts over traditional oral-presentation slides with sparse bullet points.
+        - Maintain consistent academic styling, logical organization, clear headings, and readable text.
+        - Include an integrated overview of the literature and its principal unanswered questions.
+        - Do not target a predetermined number of slides. Instead, generate as many as are useful to provide a thorough, coherent synthesis without unnecessary repetition.
+
+        **Accuracy**
+        Base all scholarly claims on the documents in this notebook. Do not invent research findings, statistical results, citations, theoretical relationships, or visual representations of data. Identify limitations and inconsistencies in the evidence rather than concealing them.`
+            .replace(/^[ \t]+/gm, "")
+            .trim()
     },
 
     "775-presentations-undergraduate-lecture": {
         title: "Research-Based Undergraduate Lecture",
-        text: "I am developing a 75-minute undergraduate lecture for an undergraduate family science course. Help me select a topic, research the scholarly literature, develop an engaging instructional plan, and create a professional PowerPoint presentation.\n\n**STEP 1: Topic Selection**\n\nFirst, ask me to choose one of these topics:\n\n- Adolescent Romantic Relationships and Partner Selection\n\n- Early Childhood Self-Regulation and Socioemotional Development\n\n- Couple Dynamics and Relationship Quality: A Systems Perspective\n\n- Family Structure, Socioeconomic Inequality, and Child Well-Being\n\nDo not proceed until I select a topic.\n\n**STEP 2: Research the Literature**\n\nIdentify and synthesize credible theoretical and empirical scholarship relevant to the selected topic.\n\n- Prioritize peer-reviewed empirical research, systematic reviews, meta-analyses, and foundational theoretical contributions.\n\n- Include contemporary findings alongside influential classic theories and research.\n\n- Identify major theoretical perspectives, empirical findings, scholarly debates, methodological limitations, and unresolved questions.\n\n- Incorporate quantitative findings where useful, preserving reported statistics and interpretations.\n\n- Distinguish correlational from causal evidence, theoretical explanations from empirical findings, and established conclusions from tentative interpretations.\n\n- Provide accurate, independently verifiable scholarly citations, with DOI or publisher links when available.\n\n- Do not invent citations, research findings, numerical results, or theoretical claims. Identify uncertainty where information cannot be verified.\n\n**STEP 3: Develop a 75-Minute Instructional Plan**\n\nAssume students have introductory knowledge of family science but limited familiarity with the selected topic.\n\nDevelop an instructional plan that includes:\n\n- Four to six clear learning objectives.\n\n- Major concepts, theories, empirical findings, and contemporary debates.\n\n- Accessible explanations, meaningful examples, and practical applications.\n\n- Approximately 50 minutes of instructional content and 25 minutes distributed across audience-response questions, classroom activities, and discussions.\n\n- At least three Mentimeter-style audience-response questions using varied formats, such as multiple choice, ranking, word cloud, or open-ended response.\n\n- At least two short classroom activities requiring students to apply, analyze, or critically evaluate the material.\n\n- Logical transitions between lecture content and interactive exercises.\n\nFor each Mentimeter-style question, provide the question wording, response options where relevant, the learning objective, and brief guidance for discussing students' responses.\n\nFor each classroom activity, provide instructions, an estimated duration, and the intended learning outcome.\n\n**STEP 4: Review the Plan**\n\nBefore generating slides, present:\n\n- The proposed lecture title and learning objectives.\n\n- An overview of the relevant theories and empirical evidence.\n\n- A 75-minute instructional outline with estimated timings.\n\n- The planned Mentimeter-style questions.\n\n- The classroom activities and discussion exercises.\n\n- A list of scholarly references.\n\nAsk whether I want to revise the plan before proceeding. Do not generate the presentation until I approve the plan.\n\n**STEP 5: Generate the PowerPoint**\n\nAfter I approve the plan, create a professional, visually engaging PowerPoint presentation suitable for delivering the complete 75-minute undergraduate class.\n\n- Use widescreen (16:9) slides with a professional, consistent visual design.\n\n- Use readable fonts, informative slide titles, and concise on-slide text.\n\n- Include meaningful conceptual diagrams, theoretical models, research figures, comparisons, and illustrations.\n\n- Include slides containing the Mentimeter-style questions, with clear wording and response options where appropriate.\n\n- Include slides with instructions for classroom activities and discussions.\n\n- Include useful speaker notes with additional explanations, source citations, activity guidance, and approximate timings where supported.\n\n- Include citations and a scholarly reference list.\n\n- Preserve the accuracy and nuance of the approved lecture plan.\n\n- Do not invent research findings, statistics, citations, or data visualizations.\n\n- Use editable PowerPoint elements wherever feasible rather than generating images of entire slides.\n\nCreate enough material and activities to support the complete 75-minute class session. The Mentimeter-style questions only need to appear on the slides. Do not create functioning Mentimeter polls or require integration with an external Mentimeter account."
+        text: `I am developing a 75-minute undergraduate lecture for an undergraduate family science course. Help me select a topic, research the scholarly literature, develop an engaging instructional plan, and create a professional PowerPoint presentation.
+
+        **STEP 1: Topic Selection**
+        First, ask me to choose one of these topics:
+        - Adolescent Romantic Relationships and Partner Selection
+        - Early Childhood Self-Regulation and Socioemotional Development
+        - Couple Dynamics and Relationship Quality: A Systems Perspective
+        - Family Structure, Socioeconomic Inequality, and Child Well-Being
+        Do not proceed until I select a topic.
+
+        **STEP 2: Research the Literature**
+        Identify and synthesize credible theoretical and empirical scholarship relevant to the selected topic.
+        - Prioritize peer-reviewed empirical research, systematic reviews, meta-analyses, and foundational theoretical contributions.
+        - Include contemporary findings alongside influential classic theories and research.
+        - Identify major theoretical perspectives, empirical findings, scholarly debates, methodological limitations, and unresolved questions.
+        - Incorporate quantitative findings where useful, preserving reported statistics and interpretations.
+        - Distinguish correlational from causal evidence, theoretical explanations from empirical findings, and established conclusions from tentative interpretations.
+        - Provide accurate, independently verifiable scholarly citations, with DOI or publisher links when available.
+        - Do not invent citations, research findings, numerical results, or theoretical claims. Identify uncertainty where information cannot be verified.
+
+        **STEP 3: Develop a 75-Minute Instructional Plan**
+        Assume students have introductory knowledge of family science but limited familiarity with the selected topic.
+        Develop an instructional plan that includes:
+        - Four to six clear learning objectives.
+        - Major concepts, theories, empirical findings, and contemporary debates.
+        - Accessible explanations, meaningful examples, and practical applications.
+        - Approximately 50 minutes of instructional content and 25 minutes distributed across audience-response questions, classroom activities, and discussions.
+        - At least three Mentimeter-style audience-response questions using varied formats, such as multiple choice, ranking, word cloud, or open-ended response.
+        - At least two short classroom activities requiring students to apply, analyze, or critically evaluate the material.
+        - Logical transitions between lecture content and interactive exercises.
+        For each Mentimeter-style question, provide the question wording, response options where relevant, the learning objective, and brief guidance for discussing students' responses.
+        For each classroom activity, provide instructions, an estimated duration, and the intended learning outcome.
+
+        **STEP 4: Review the Plan**
+        Before generating slides, present:
+        - The proposed lecture title and learning objectives.
+        - An overview of the relevant theories and empirical evidence.
+        - A 75-minute instructional outline with estimated timings.
+        - The planned Mentimeter-style questions.
+        - The classroom activities and discussion exercises.
+        - A list of scholarly references.
+        Ask whether I want to revise the plan before proceeding. Do not generate the presentation until I approve the plan.
+
+        **STEP 5: Generate the PowerPoint**
+        After I approve the plan, create a professional, visually engaging PowerPoint presentation suitable for delivering the complete 75-minute undergraduate class.
+        - Use widescreen (16:9) slides with a professional, consistent visual design.
+        - Use readable fonts, informative slide titles, and concise on-slide text.
+        - Include meaningful conceptual diagrams, theoretical models, research figures, comparisons, and illustrations.
+        - Include slides containing the Mentimeter-style questions, with clear wording and response options where appropriate.
+        - Include slides with instructions for classroom activities and discussions.
+        - Include useful speaker notes with additional explanations, source citations, activity guidance, and approximate timings where supported.
+        - Include citations and a scholarly reference list.
+        - Preserve the accuracy and nuance of the approved lecture plan.
+        - Do not invent research findings, statistics, citations, or data visualizations.
+        - Use editable PowerPoint elements wherever feasible rather than generating images of entire slides.
+        Create enough material and activities to support the complete 75-minute class session. The Mentimeter-style questions only need to appear on the slides. Do not create functioning Mentimeter polls or require integration with an external Mentimeter account.`
+            .replace(/^[ \t]+/gm, "")
+            .trim()
     },
 
 };

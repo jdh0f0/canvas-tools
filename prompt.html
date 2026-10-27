@@ -29,7 +29,15 @@ body {
 }
 
 .prompt-text {
-    white-space: pre-wrap;
+    white-space: normal;
+}
+
+.prompt-line {
+    margin: 0 0 6px 0;
+}
+
+.prompt-section-break {
+    height: 2px;
 }
 
 .prompt-text strong {
@@ -139,9 +147,16 @@ function escapeHTML(value) {
 
 
 function formatPromptForDisplay(value) {
+    return value.split(/\r?\n/).map(line => {
+        if (!line.trim()) {
+            return '<div class="prompt-section-break" aria-hidden="true"></div>';
+        }
 
-    return escapeHTML(value)
-        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        const formattedLine = escapeHTML(line)
+            .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+        return `<div class="prompt-line">${formattedLine}</div>`;
+    }).join("");
 }
 
 
