@@ -269,7 +269,7 @@ Conclude with a 4–6 sentence summary describing the most pressing or emerging 
 
     "775-presentations-conference": {
         title: "Research Conference Presentation",
-        text: "Create a professional, visually polished PowerPoint presentation based on my attached research document. The presentation should be suitable for a 15-minute academic research conference presentation attended by family scientists.
+        text: `Create a professional, visually polished PowerPoint presentation based on my attached research document. The presentation should be suitable for a 15-minute academic research conference presentation attended by family scientists.
             
         **Research Content**
         Accurately summarize the research problem, theoretical and empirical background, and contribution to the literature.
@@ -290,7 +290,9 @@ Conclude with a 4–6 sentence summary describing the most pressing or emerging 
         Conclude with the principal contributions, implications, or next steps.
     
         **Process**
-        First, propose a slide-by-slide outline identifying the main message and recommended visual for each slide. Give me an opportunity to revise the outline before generating the presentation. After I approve the outline, create an editable PowerPoint presentation."
+        First, propose a slide-by-slide outline identifying the main message and recommended visual for each slide. Give me an opportunity to revise the outline before generating the presentation. After I approve the outline, create an editable PowerPoint presentation.`
+            .replace(/^[ \t]+/gm, "")
+            .trim()
     },
 
     "775-presentations-literature-review": {
