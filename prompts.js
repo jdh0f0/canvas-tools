@@ -386,4 +386,35 @@ Conclude with a 4–6 sentence summary describing the most pressing or emerging 
             .trim()
     },
 
+    /* =========================================================
+       ASSIGNMENT 5 — VISUAL COMMUNICATION WITH GENAI
+       ========================================================= */
+
+    "775-visual-chapter-infographic": {
+        title: "Chapter Study-Guide Infographic",
+        text: `I am creating a one-page study-guide infographic from the attached book chapter. I previously made my own chapter cheat sheet, and I will compare it with the AI-created version. Use only the attached chapter as your source. Do not use outside information or add claims that are not supported by the chapter.
+
+**First, prepare the content for review.** Identify the chapter's central idea, 4–6 essential concepts or findings, and the most important relationships, distinctions, or examples. Propose concise wording and a visual hierarchy for a one-page study guide. For each major point, identify the chapter heading and page number that support it when those are available. Flag any ambiguity or information you cannot verify. Do not create the infographic yet. Wait for me to review and approve or correct the content.
+
+**After I approve the content, create the visual.** Make a readable, one-page portrait study-guide infographic for a graduate student reviewing the chapter. Use concise labels, clear grouping, and a visual structure that shows relationships among ideas. Preserve the approved wording and distinctions. Do not invent quotations, statistics, examples, citations, or connections. Keep the design useful for studying rather than decorative. If you cannot render exact text reliably, provide the approved text in an editable, clearly organized layout for me to place in PowerPoint or another design tool.`
+    },
+
+    "775-visual-article-abstract": {
+        title: "Research Article Visual Abstract",
+        text: `I am creating a one-page visual abstract of the attached scholarly research article. Use only this article as your source. The visual must represent the study accurately for a graduate student or academic audience. Do not use outside sources, infer details that the authors did not report, or treat association as causation.
+
+**First, prepare the content for review.** Identify the article's research question or purpose, theoretical rationale if stated, study design, sample or data, measures or procedures, analysis if important, principal findings, and limitations. Preserve reported numbers and qualifications exactly. Distinguish the authors' findings from their interpretations. For each point, identify the article section and page number when available. Flag information that is absent or uncertain. Propose a concise visual-abstract outline, but do not create the graphic yet. Wait for me to review and approve or correct the content.
+
+**After I approve the content, create the visual.** Make a one-page landscape visual abstract with a clear reading order and short, accurate labels. Include the article's full citation in a small, readable footer using the citation details printed in the article; do not guess at missing information. Do not create a chart from unreported values, overstate causal conclusions, or add claims from outside the article. If you cannot render exact text reliably, provide the approved text in an editable, clearly organized layout for me to place in PowerPoint or another design tool.`
+    },
+
+    "775-visual-apa-napkin": {
+        title: "APA Quick-Reference Visual — Napkin",
+        text: `I want to turn one specific rule or process from an APA Manual chapter I have read into a quick-reference visual using Napkin. I will provide my own concise, verified outline of the guidance and the Manual's chapter or section details. Use only the outline I provide. Do not add rules from memory, other editions, websites, or other sources.
+
+**Before creating the visual, review the outline.** Identify the main decision or task, the steps or conditions, and any exceptions or distinctions included in my outline. Point out wording that is ambiguous or seems incomplete, and ask me to verify it in the APA Manual. Do not fill gaps by guessing. Wait for me to confirm the outline.
+
+**After I confirm it, create one quick-reference visual in Napkin.** Choose the format that best fits the content: a decision tree for conditional choices, a flowchart for a sequence of steps, or a checklist for a set of requirements. Use short labels, clear arrows or grouping, and a readable layout. Preserve the confirmed rules and exceptions exactly. Include a small source note using the Manual chapter or section details I provide. Do not invent page numbers or guidance. If the visual would become crowded, simplify the layout without dropping a rule and tell me what was condensed.`
+    },
+    
 };
