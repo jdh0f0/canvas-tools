@@ -409,12 +409,49 @@ Conclude with a 4–6 sentence summary describing the most pressing or emerging 
     },
 
     "775-visual-apa-napkin": {
-        title: "APA Quick-Reference Visual — Napkin",
-        text: `I want to turn one specific rule or process from an APA Manual chapter I have read into a quick-reference visual using Napkin. I will provide my own concise, verified outline of the guidance and the Manual's chapter or section details. Use only the outline I provide. Do not add rules from memory, other editions, websites, or other sources.
+        title: "Visualizing a Theory, Model, or Process — Napkin",
+        text: `I am creating a visual in Napkin for a FAM 775 assignment. Help me select and accurately explain a scholarly theory, conceptual model, developmental or relational process, or research/statistical model related to family science, close relationships, human development, or family research.
 
-**Before creating the visual, review the outline.** Identify the main decision or task, the steps or conditions, and any exceptions or distinctions included in my outline. Point out wording that is ambiguous or seems incomplete, and ask me to verify it in the APA Manual. Do not fill gaps by guessing. Wait for me to confirm the outline.
+**Start by helping me choose.** Do not create the explanation yet. Ask me to choose one option below, name another topic, or describe an interest and ask you to recommend a few manageable choices. I may answer with a number, title, or my own topic. Help me narrow a broad topic to something that can be represented clearly in one visual.
 
-**After I confirm it, create one quick-reference visual in Napkin.** Choose the format that best fits the content: a decision tree for conditional choices, a flowchart for a sequence of steps, or a checklist for a set of requirements. Use short labels, clear arrows or grouping, and a readable layout. Preserve the confirmed rules and exceptions exactly. Include a small source note using the Manual chapter or section details I provide. Do not invent page numbers or guidance. If the visual would become crowded, simplify the layout without dropping a rule and tell me what was condensed.`
+**Theory and conceptual frameworks**
+- Family systems theory; Bowen family systems theory; structural family theory
+- Attachment theory; social exchange and interdependence perspectives; investment model of commitment
+- Bronfenbrenner's bioecological theory; ecological systems perspectives
+- Life course perspective; family development theory; family life course frameworks
+- Family stress model; ABC-X model; Double ABC-X model; FAAR model
+- Family resilience framework; risk and resilience frameworks
+- Vulnerability-Stress-Adaptation model of couple relationships
+- Theory of Planned Behavior; social learning/social cognitive theory
+
+**Family and relationship processes**
+- Couple relationship development, commitment, conflict, or repair
+- Transition to marriage, cohabitation, parenthood, or stepfamily life
+- Divorce, separation, and post-divorce adjustment
+- Parent-child relationships, parenting, co-parenting, or adolescent autonomy
+- Family caregiving, intergenerational relationships, or aging
+- Family financial socialization, financial strain, or household financial decision-making
+- Ecological or developmental frameworks for intimate partner violence or child maltreatment; handle these topics carefully and do not imply that one pathway applies to every family
+
+**Research and statistical models**
+- Mediation; moderation; moderated mediation
+- Actor-Partner Interdependence Model (APIM) for dyadic data
+- Path analysis or structural equation modeling
+- Regression models and the distinction between predictors, outcomes, and covariates
+- Longitudinal growth-curve models; cross-lagged panel models
+- A conceptual model for a family science research question that I provide
+
+These are starting points, not claims that every item is a theory or a step-by-step process. If I choose a statistical model, explain its variables and modeled paths without treating paths as proof of causation. If I choose a process or developmental framework, do not present it as universal, strictly linear, or inevitable unless the source explicitly does so.
+
+**After I choose a topic, prepare the explanation.** First confirm the exact framework, version, or scope you will describe. Then give a concise, accurate account that identifies its key components or stages, how they are related, and any important conditions, reciprocal links, or limits needed to avoid misrepresenting it. Distinguish the framework's propositions from empirical findings and from your interpretation. Use plain language suitable for a clear one-page visual, but retain essential qualifications.
+
+Support the explanation with one or more credible scholarly or authoritative sources that I can check, preferably the original publication or a scholarly review and, when useful, a reliable textbook or academic source. Provide author, year, title, and DOI or stable URL only when you can verify those details. Never invent citations, quotations, page numbers, source claims, arrows, or causal effects. If you cannot access or verify a source, say so plainly and give me targeted search terms or the source details I should locate; do not pretend you verified it. Identify which component or relationship each source supports when possible.
+
+**Format your response in two parts:**
+1. **Source-checking notes:** the concise explanation, the source(s) and working DOI/URL if verified, and any uncertainties or qualifications I should check against the source before using it.
+2. **Napkin-ready text:** a compact title followed by short, clearly grouped labels and explicit relationships (for example, “A is associated with B,” “X may shape the link between A and B,” or “Stage 1 is followed by Stage 2” only when supported). Make this section easy to copy into Napkin. Do not include unsupported citations or facts in it.
+
+Do not make the visual itself. I will verify the explanation against a credible source, then paste the Napkin-ready text into Napkin and inspect the resulting visual.`
     },
     
 };
