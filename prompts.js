@@ -399,7 +399,7 @@ Conclude with a 4–6 sentence summary describing the most pressing or emerging 
 **After I approve the content, create the visual.** Make a readable, one-page portrait study-guide infographic for a graduate student reviewing the chapter. Use concise labels, clear grouping, and a visual structure that shows relationships among ideas. Include this APA-style reference to the source book in a small, readable footer or another clear location within the infographic: Machi, L. A., & McEvoy, B. T. (2022). The literature review: Six steps to success (4th ed.). Corwin. Preserve the approved wording and distinctions. Do not invent quotations, statistics, examples, citations, or connections. Keep the design useful for studying rather than decorative. After creating the initial infographic, continue dialoguing with me about revisions. Help me refine its content and design until I am satisfied with the result. Preserve the approved content and do not introduce unsupported details. If you cannot render exact text reliably, provide the approved text in an editable, clearly organized layout for me to place in PowerPoint or another design tool.`
     },
 
-    "775-visual-article-abstract": {
+    "775-visual-article-summary": {
         title: "Research Article Visual Summary",
         text: `I am creating a one-page visual summary of the attached scholarly research article. Use only this article as your source. The visual must represent the study accurately for a graduate student or academic audience. Do not use outside sources, infer details that the authors did not report, or treat association as causation.
 
@@ -408,7 +408,7 @@ Conclude with a 4–6 sentence summary describing the most pressing or emerging 
 **After I approve the content, create the visual.** Make a one-page landscape visual summary with a clear reading order and short, accurate labels. Include the article's complete APA-style reference within the visual itself, preferably in a small, readable footer or, if space requires, another clear location in the infographic. Use citation details printed in the article; do not guess at missing information. Do not create a chart from unreported values, overstate causal conclusions, or add claims from outside the article. After creating the initial infographic, continue dialoguing with me about revisions. Help me refine its content and design until I am satisfied with the result. Preserve the approved content and do not introduce unsupported details. If you cannot render exact text reliably, provide the approved text in an editable, clearly organized layout for me to place in PowerPoint or another design tool.`
     },
 
-    "775-visual-apa-napkin": {
+    "775-visual-theory-model-process-napkin": {
         title: "Visualizing a Theory, Model, or Process — Napkin",
         text: `I am creating a visual in Napkin for a FAM 775 assignment. Help me select and accurately explain a scholarly theory, conceptual model, developmental or relational process, or research/statistical model related to family science, close relationships, human development, or family research.
 
