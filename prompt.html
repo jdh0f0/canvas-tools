@@ -334,6 +334,7 @@ function notifyCopy() {
     const data = new URLSearchParams();
 
     data.append("promptId", promptID);
+    data.append("promptTitle", prompts[promptID]?.title || promptID);
     data.append("course", course);
 
     fetch(
